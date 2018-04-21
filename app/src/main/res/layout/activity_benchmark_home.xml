@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="umassd.benchmark562.BenchmarkHome">
+    tools:context="com.example.drew.benchmark562.MainActivity">
 
     <TextView
         android:id="@+id/welcomeText"
@@ -44,7 +44,7 @@
         android:id="@+id/bmark1Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CPU Test"
+        android:text="CPU Benchmark"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,8 +88,8 @@
     <TextView
         android:id="@+id/bmark1Desc"
         android:layout_width="182dp"
-        android:layout_height="48dp"
-        android:text="Description of benchmark..."
+        android:layout_height="52dp"
+        android:text="Tests low-order, high-order, compression, sorting and hashing performance."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
@@ -122,7 +122,7 @@
         android:id="@+id/bmark3Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Memory Test"
+        android:text="Memory Benchmark"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -166,8 +166,8 @@
     <TextView
         android:id="@+id/bmark3Desc"
         android:layout_width="182dp"
-        android:layout_height="48dp"
-        android:text="Description of benchmark..."
+        android:layout_height="52dp"
+        android:text="Tests sequential r/w, random r/w, and zeroing on primary and secondary storage."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
@@ -200,15 +200,15 @@
         android:id="@+id/bmark2Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Battery-life Test"
+        android:text="Battery Benchmark"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
+        app:layout_constraintVertical_bias="0.563" />
 
     <TextView
         android:id="@+id/bmark3ScoreLabel"
@@ -245,7 +245,7 @@
         android:id="@+id/bmark2Desc"
         android:layout_width="182dp"
         android:layout_height="48dp"
-        android:text="Description of benchmark..."
+        android:text="Only run during a FULL TEST. Phone cannot be charging."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
@@ -338,6 +338,7 @@
         android:ems="10"
         android:inputType="textMultiLine"
         android:scrollbars="vertical"
+        android:gravity="bottom"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

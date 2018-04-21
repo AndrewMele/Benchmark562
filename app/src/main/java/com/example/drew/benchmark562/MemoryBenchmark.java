@@ -1,37 +1,77 @@
 package com.example.drew.benchmark562;
 
-import android.app.ActivityManager;
-
 // NOTES:
 // Apps are each given a fixed amount of heap (generally RAM) space
 
 public class MemoryBenchmark
 {
-    public void TestPrimaryMem()
+    //----------------------------------------------------------------------------------------------
+    // Primary Storage Tests
+    //----------------------------------------------------------------------------------------------
+
+    static public long TestPrimSeqRead()
     {
-        // Sequential read test
-        //ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();as
-
-        // Sequential write test
-
-        // Random read test
-
-        // Random read test
-
-        // Zeroing and Formatting
-
+        return 0;
     }
 
-    public void TestSecondaryMem()
+    static public long TestPrimSeqWrite()
     {
-        // Sequential read test
+        return 0;
+    }
 
-        // Sequential write test
+    static public long TestPrimRandRead()
+    {
+        return 0;
+    }
 
-        // Random read test
+    static public long TestPrimRandWrite()
+    {
+        return 0;
+    }
+    static public long TestPrimZeroing()
+    {
+        return 0;
+    }
 
-        // Random read test
+    //----------------------------------------------------------------------------------------------
+    // Secondary Storage Tests
+    //----------------------------------------------------------------------------------------------
 
-        // Zeroing and Formatting
+    static public long TestSecSeqRead()
+    {
+        return 0;
+    }
+
+    static public long TestSecSeqWrite()
+    {
+        return 0;
+    }
+
+    static public long TestSecRandRead()
+    {
+        return 0;
+    }
+    static public long TestSecRandWrite()
+    {
+        return 0;
+    }
+
+    static public long TestSecZeroing()
+    {
+        return 0;
+    }
+
+
+
+    //----------------------------------------------------------------------------------------------
+    // Helper functions
+    //----------------------------------------------------------------------------------------------
+
+    public static long GetAvailableMemInBytes()
+    {
+        Runtime runtime = Runtime.getRuntime();
+        long maxMemBytes = runtime.maxMemory();
+        long usedMemBytes = runtime.totalMemory() - runtime.freeMemory();
+        return maxMemBytes - usedMemBytes;
     }
 }
