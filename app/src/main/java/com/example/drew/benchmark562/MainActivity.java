@@ -11,7 +11,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
-import java.lang.Boolean;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity
     TextView totalScore;
     Button bmark1RunBtn;
     Button bmark2RunBtn;
-    Button bmark3RunBtn;
     Button fullTestBtn;
 
     // To keep track of the scores for each of the benchmarks
@@ -47,7 +45,6 @@ public class MainActivity extends AppCompatActivity
         totalScore = (TextView) findViewById(R.id.totalScore);
         bmark1RunBtn = (Button) findViewById(R.id.bmark1RunBtn);
         bmark2RunBtn = (Button) findViewById(R.id.bmark2RunBtn);
-        bmark3RunBtn = (Button) findViewById(R.id.bmark3RunBtn);
         fullTestBtn = (Button) findViewById(R.id.fullTestBtn);
 
         // Allows text view to scroll
@@ -255,13 +252,13 @@ public class MainActivity extends AppCompatActivity
     {
         bmark1RunBtn.setEnabled(false);
         bmark2RunBtn.setEnabled(false);
-        bmark3RunBtn.setEnabled(false);
+        fullTestBtn.setEnabled(false);
     }
 
     public void EnableAllButtons()
     {
         bmark1RunBtn.setEnabled(true);
         bmark2RunBtn.setEnabled(true);
-        bmark3RunBtn.setEnabled(true);
+        fullTestBtn.setEnabled(false);
     }
 }

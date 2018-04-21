@@ -119,7 +119,7 @@
     <!-- Benchmark 2 Controls -->
 
     <TextView
-        android:id="@+id/bmark3Label"
+        android:id="@+id/bmark2Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Memory Benchmark"
@@ -164,7 +164,7 @@
         app:layout_constraintVertical_bias="0.456" />
 
     <TextView
-        android:id="@+id/bmark3Desc"
+        android:id="@+id/bmark2Desc"
         android:layout_width="182dp"
         android:layout_height="52dp"
         android:text="Tests sequential r/w, random r/w, and zeroing on primary and secondary storage."
@@ -176,7 +176,7 @@
         app:layout_constraintVertical_bias="0.435" />
 
     <Button
-        android:id="@+id/bmark3RunBtn"
+        android:id="@+id/bmark2RunBtn"
         android:layout_width="69dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -197,7 +197,7 @@
     <!-- Benchmark 3 Controls -->
 
     <TextView
-        android:id="@+id/bmark2Label"
+        android:id="@+id/bmark3Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Battery Benchmark"
@@ -242,29 +242,13 @@
         app:layout_constraintVertical_bias="0.649" />
 
     <TextView
-        android:id="@+id/bmark2Desc"
+        android:id="@+id/bmark3Desc"
         android:layout_width="182dp"
         android:layout_height="48dp"
         android:text="Only run during a FULL TEST. Phone cannot be charging."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635" />
-
-    <Button
-        android:id="@+id/bmark2RunBtn"
-        android:layout_width="69dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="Run"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.635" />
