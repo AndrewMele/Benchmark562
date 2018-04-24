@@ -1,6 +1,11 @@
 package com.example.drew.benchmark562;
 
 import java.util.Random;
+import java.security.MessageDigest;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigestSpi;
+import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 public class CpuBenchmark
 {
@@ -106,6 +111,42 @@ public class CpuBenchmark
 
     static public long TestHashingPerf()
     {
-        return 0;
+        Random rng = new Random(1); // seed of 1
+        long startTime;
+        long stopTime;
+        long elapsedNanos = 0;
+
+        try
+        {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            String randString = GenRandString(rng.nextInt());
+            byte[] textBytes = randString.getBytes();
+            startTime = System.nanoTime();
+            md.update(textBytes, 0, textBytes.length);
+            byte[] sha1hash = md.digest();
+            stopTime = System.nanoTime();
+            elapsedNanos += stopTime - startTime;
+
+            // Debug
+            System.out.println(sha1hash);
+        }
+        catch(NoSuchAlgorithmException nsae)
+        {
+            elapsedNanos = 0;
+        }
+
+        return elapsedNanos;
+    }
+
+    static public String GenRandString(int randStrLen)
+    {
+        String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345789";
+        Random rng = new Random(1); // seed of 1
+        String randString = "";
+        for (int i = 0; i < randStrLen; i++)
+        {
+            randString += alphaNumeric.indexOf(rng.nextInt());
+        }
+        return randString;
     }
 }
