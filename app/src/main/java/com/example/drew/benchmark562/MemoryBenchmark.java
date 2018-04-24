@@ -1,5 +1,12 @@
 package com.example.drew.benchmark562;
-
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import android.util.Log;
+import android.content.Context;
 // NOTES:
 // Apps are each given a fixed amount of heap (generally RAM) space
 
@@ -9,14 +16,76 @@ public class MemoryBenchmark
     // Primary Storage Tests
     //----------------------------------------------------------------------------------------------
 
-    static public long TestPrimSeqRead()
+    static public long TestPrimSeqRead(Context context)
     {
-        return 0;
+        String data = "";
+        InputStream inputStream;
+        InputStreamReader inputStreamReader;
+        BufferedReader bufferedReader;
+        String receiveString;
+        StringBuilder stringBuilder;
+        long startTime;
+        long stopTime;
+        long elapsedNanos;
+        int numOps = 1000;
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < numOps; i++)
+        {
+            try{
+                 inputStream = context.openFileInput("test" + i + ".txt");
+
+                if ( inputStream != null ) {
+                    inputStreamReader = new InputStreamReader(inputStream);
+                    bufferedReader = new BufferedReader(inputStreamReader);
+                    receiveString = "";
+                    stringBuilder = new StringBuilder();
+
+                    while ( (receiveString = bufferedReader.readLine()) != null ) {
+                        stringBuilder.append(receiveString);
+                    }
+
+                    inputStream.close();
+                    data = stringBuilder.toString();
+                }
+            }
+            catch (FileNotFoundException e) {
+                Log.e("login activity", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("login activity", "Can not read file: " + e.toString());
+            }
+        }
+        stopTime = System.nanoTime();
+        elapsedNanos = stopTime - startTime;
+
+        return elapsedNanos;
     }
 
-    static public long TestPrimSeqWrite()
+    static public long TestPrimSeqWrite(Context context)
     {
-        return 0;
+        String data = "Testing...";
+        OutputStreamWriter stream;
+        long startTime;
+        long stopTime;
+        long elapsedNanos;
+        int numOps = 1000;
+        startTime = System.nanoTime();
+        for (int i = 0; i < numOps; i++)
+        {
+            try {
+                stream = new OutputStreamWriter(context.openFileOutput("test" + i + ".txt", Context.MODE_PRIVATE));
+                stream.write(data);
+                stream.close();
+            }
+            catch(IOException e){
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+
+        }
+        stopTime = System.nanoTime();
+        elapsedNanos = stopTime - startTime;
+
+        return elapsedNanos;
     }
 
     static public long TestPrimRandRead()
