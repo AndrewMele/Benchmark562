@@ -2,10 +2,7 @@ package com.example.drew.benchmark562;
 
 import java.util.Random;
 import java.security.MessageDigest;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigestSpi;
 import java.security.NoSuchAlgorithmException;
-import java.util.UUID;
 
 public class CpuBenchmark
 {
@@ -112,27 +109,34 @@ public class CpuBenchmark
     static public long TestHashingPerf()
     {
         Random rng = new Random(1); // seed of 1
+        int maxStrLen = 1000;
         long startTime;
         long stopTime;
         long elapsedNanos = 0;
+        int numHashOps = 100000;
 
-        try
+        for (int i = 0; i < numHashOps; i++)
         {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            String randString = GenRandString(rng.nextInt());
-            byte[] textBytes = randString.getBytes();
-            startTime = System.nanoTime();
-            md.update(textBytes, 0, textBytes.length);
-            byte[] sha1hash = md.digest();
-            stopTime = System.nanoTime();
-            elapsedNanos += stopTime - startTime;
+            try
+            {
+                MessageDigest md = MessageDigest.getInstance("SHA-512");
+                String randString = GenRandString(rng.nextInt(maxStrLen)+1); // +1 because we don't want a string of length 0
+                byte[] textBytes = randString.getBytes();
+                startTime = System.nanoTime();
+                md.update(textBytes, 0, textBytes.length);
+                byte[] sha1hash = md.digest();
+                stopTime = System.nanoTime();
+                elapsedNanos += stopTime - startTime;
 
-            // Debug
-            System.out.println(sha1hash);
-        }
-        catch(NoSuchAlgorithmException nsae)
-        {
-            elapsedNanos = 0;
+                // Debug
+                System.out.println("The string is: " + randString);
+                System.out.println(String.format("The hash is: " + ByteArrayToHex(sha1hash)));
+            }
+            catch(NoSuchAlgorithmException nsae)
+            {
+                System.out.println("NoSuchAlgorithmException occurred...");
+                elapsedNanos = 0;
+            }
         }
 
         return elapsedNanos;
@@ -143,10 +147,19 @@ public class CpuBenchmark
         String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345789";
         Random rng = new Random(1); // seed of 1
         String randString = "";
+        int eleNum;
         for (int i = 0; i < randStrLen; i++)
         {
-            randString += alphaNumeric.indexOf(rng.nextInt());
+            randString += alphaNumeric.charAt(rng.nextInt(alphaNumeric.length()));
         }
         return randString;
+    }
+
+    public static String ByteArrayToHex(byte[] a)
+    {
+        StringBuilder sb = new StringBuilder(a.length * 2);
+        for(byte b: a)
+            sb.append(String.format("%02x", b));
+        return sb.toString();
     }
 }
