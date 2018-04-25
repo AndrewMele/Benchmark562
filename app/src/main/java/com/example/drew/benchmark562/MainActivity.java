@@ -14,6 +14,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
 {
+    Context context;
+
     // Variables for the controls we will be manipulating in software
     TextView loggerPanel;
     TextView bmark1Score;
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity
         bmark3Score.setText("---");
         totalScore.setText("?");
 
+        context = getBaseContext();
+
         // Event for when bmark1RunBtn is pressed
         bmark1RunBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -85,7 +89,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Context context = getBaseContext();
                 IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
                 Intent batteryStatus = context.registerReceiver(null, ifilter);;
                 int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
@@ -194,8 +197,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... values)
         {
-            primSeqReadNanos = MemoryBenchmark.TestPrimSeqRead();
-            primSeqWriteNanos = MemoryBenchmark.TestPrimSeqWrite();
+            primSeqReadNanos = MemoryBenchmark.TestPrimSeqRead(context);
+            primSeqWriteNanos = MemoryBenchmark.TestPrimSeqWrite(context);
             primRandReadNanos = MemoryBenchmark.TestPrimRandRead();
             primRandWriteNanos = MemoryBenchmark.TestPrimRandWrite();
             primZeroingNanos = MemoryBenchmark.TestPrimZeroing();
