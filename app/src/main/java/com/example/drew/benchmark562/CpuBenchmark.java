@@ -101,6 +101,7 @@ public class CpuBenchmark
 
     static public long TestCompressionPerf()
     {
+        /*
         // https://developer.android.com/reference/java/util/zip/Deflater
 
         int numOps = 1000;
@@ -162,14 +163,14 @@ public class CpuBenchmark
             }
             stopTime = System.nanoTime(); // end decompression
             elapsedNanos += stopTime - startTime;
-        }
+        }*/
 
         return 0;
     }
 
     static public long TestSortingPerf()
     {
-        int numEleToSort = 10000;
+        /*int numEleToSort = 10000;
         int intArr[] = new int[numEleToSort];
         Random rng = new Random(1); // seed of 1
         int maxRand = 1000000;
@@ -194,7 +195,8 @@ public class CpuBenchmark
         stopTime = System.nanoTime();
         elapsedNanos += stopTime - startTime;
 
-        return elapsedNanos;
+        return elapsedNanos;*/
+        return 0;
     }
 
     static public long TestHashingPerf()

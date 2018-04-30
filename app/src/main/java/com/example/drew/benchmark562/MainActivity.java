@@ -199,15 +199,10 @@ public class MainActivity extends AppCompatActivity
         {
             primSeqReadNanos = MemoryBenchmark.TestPrimSeqRead(context);
             primSeqWriteNanos = MemoryBenchmark.TestPrimSeqWrite(context);
-            primRandReadNanos = MemoryBenchmark.TestPrimRandRead();
-            primRandWriteNanos = MemoryBenchmark.TestPrimRandWrite();
-            primZeroingNanos = MemoryBenchmark.TestPrimZeroing();
+            primRandReadNanos = MemoryBenchmark.TestPrimRandRead(context);
+            primRandWriteNanos = MemoryBenchmark.TestPrimRandWrite(context);
+            primZeroingNanos = MemoryBenchmark.TestPrimZeroing(context);
 
-            secSeqReadNanos = MemoryBenchmark.TestSecSeqRead();
-            secSeqWriteNanos = MemoryBenchmark.TestSecSeqWrite();
-            secRandReadNanos = MemoryBenchmark.TestSecRandRead();
-            secRandWriteNanos = MemoryBenchmark.TestSecRandWrite();
-            secZeroingNanos = MemoryBenchmark.TestSecZeroing();
             return null;
         }
 
@@ -221,21 +216,12 @@ public class MainActivity extends AppCompatActivity
             loggerPanel.append("Primary rand read NanoSecs: " + primRandReadNanos + "\n");
             loggerPanel.append("Primary rand write NanoSecs: " + primRandWriteNanos + "\n");
             loggerPanel.append("Primary zeroing NanoSecs: " + primZeroingNanos + "\n");
-
-            loggerPanel.append("Secondary seq read NanoSecs: " + secSeqReadNanos + "\n");
-            loggerPanel.append("Secondary seq write NanoSecs: " + secSeqWriteNanos + "\n");
-            loggerPanel.append("Secondary rand read NanoSecs: " + secRandReadNanos + "\n");
-            loggerPanel.append("Secondary rand write NanoSecs: " + secRandWriteNanos + "\n");
-            loggerPanel.append("Secondary zeroing NanoSecs: " + secZeroingNanos + "\n");
             loggerPanel.append("----------CONCLUDING MEM BENCHMARKS-----------\n\n");
 
             // Compute the Memory Benchmark score
-            long primNanos = primSeqReadNanos + primSeqWriteNanos + primRandReadNanos
-                    + primRandWriteNanos + primZeroingNanos;
-            long secNanos = secSeqReadNanos + secSeqWriteNanos + secRandReadNanos
-                    + secRandWriteNanos + secZeroingNanos;
-            memScore = (((primNanos+secNanos) / 1000/*microS*/) / 1000/*milliS*/);
-            bmark1Score.setText(Long.toString(cpuScore));
+            long primNanos = primSeqReadNanos + primSeqWriteNanos + primRandReadNanos + primRandWriteNanos + primZeroingNanos;
+            memScore = (((primNanos) / 1000/*microS*/) / 1000/*milliS*/);
+            bmark2Score.setText(Long.toString(memScore));
 
             // Update the Total Score
             totScore = cpuScore + memScore + batScore;
