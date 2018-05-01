@@ -1,10 +1,12 @@
 package com.example.drew.benchmark562;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -21,16 +23,26 @@ public class MainActivity extends AppCompatActivity
     TextView bmark1Score;
     TextView bmark2Score;
     TextView bmark3Score;
-    TextView totalScore;
+    //TextView totalScore;
     Button bmark1RunBtn;
     Button bmark2RunBtn;
-    Button fullTestBtn;
+    Button bmark3RunBtn;
 
     // To keep track of the scores for each of the benchmarks
     long cpuScore = 0;
     long memScore = 0;
     long batScore = 0;
     long totScore = 0;
+
+    AlertDialog batDialog;
+    AlertDialog cpuDialog;
+    AlertDialog memDialog;
+
+    Boolean perfBatteryFlag = false;
+    BatteryManager bm;
+    int preTestBatPct;
+    int postTestBatPct;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,10 +56,10 @@ public class MainActivity extends AppCompatActivity
         bmark1Score = (TextView) findViewById(R.id.bmark1Score);
         bmark2Score = (TextView) findViewById(R.id.bmark2Score);
         bmark3Score = (TextView) findViewById(R.id.bmark3Score);
-        totalScore = (TextView) findViewById(R.id.totalScore);
+        //totalScore = (TextView) findViewById(R.id.totalScoreLabel);
         bmark1RunBtn = (Button) findViewById(R.id.bmark1RunBtn);
         bmark2RunBtn = (Button) findViewById(R.id.bmark2RunBtn);
-        fullTestBtn = (Button) findViewById(R.id.fullTestBtn);
+        bmark3RunBtn = (Button) findViewById(R.id.bmark3RunBtn);
 
         // Allows text view to scroll
         loggerPanel.setMovementMethod(new ScrollingMovementMethod());
@@ -57,9 +69,11 @@ public class MainActivity extends AppCompatActivity
         bmark1Score.setText("---");
         bmark2Score.setText("---");
         bmark3Score.setText("---");
-        totalScore.setText("?");
+        //totalScore.setText("Total Score: ?");
 
         context = getBaseContext();
+
+        bm = (BatteryManager)getSystemService(BATTERY_SERVICE);
 
         // Event for when bmark1RunBtn is pressed
         bmark1RunBtn.setOnClickListener(new View.OnClickListener()
@@ -83,33 +97,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Event for when bmark2RunBtn is pressed
-        fullTestBtn.setOnClickListener(new View.OnClickListener()
+        // Event for when bmark3RunBtn is pressed
+        bmark3RunBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-                Intent batteryStatus = context.registerReceiver(null, ifilter);;
-                int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-                int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-                float preTestBatPct = level / (float)scale;
-                loggerPanel.append("Pre-test battery percentage: " + preTestBatPct*100 + "%\n");
-
-                RunCpuBenchmark cpuBenchmark = new RunCpuBenchmark();
-                cpuBenchmark.execute();
-
-                // need to come up with a way to wait until cpu benchmark is done,
-                // may want to consider removing async tasks, there is nothing to do on the
-                // UI thread while a test is running anyway.
-
-                RunMemoryBenchmark memoryBenchmark = new RunMemoryBenchmark();
-                memoryBenchmark.execute();
-
-                level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-                scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-                float postTestBatPct = level / (float)scale;
-                loggerPanel.append("Post-test battery percentage: " + postTestBatPct*100 + "%\n");
+                RunBatBenchmark runBatBenchmark = new RunBatBenchmark();
+                runBatBenchmark.execute();
             }
         });
     }
@@ -127,8 +122,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPreExecute()
         {
-            loggerPanel.append("------------RUNNING CPU BENCHMARKS------------\n");
             DisableAllButtons();
+
+            cpuDialog = new AlertDialog.Builder(MainActivity.this).create();
+            cpuDialog.setTitle("Running CPU benchmark...");
+            cpuDialog.setMessage("This pop-up will disappear when the benchmark finishes.");
+            cpuDialog.setCancelable(false);
+            cpuDialog.setCanceledOnTouchOutside(false);
+            cpuDialog.show();
+            loggerPanel.append("\n------------RUNNING CPU BENCHMARKS------------\n");
         }
 
         @Override
@@ -145,26 +147,29 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void result)
         {
+            cpuDialog.dismiss();
+
             // Log results
-            loggerPanel.append("DONE with CPU Benchmark!\n");
-            loggerPanel.append("Low-order NanoSecs: " + lowOrderNanos + "\n");
-            loggerPanel.append("High-order NanoSecs: " + highOrderNanos + "\n");
-            loggerPanel.append("Compression NanoSecs: " + compressionNanos + "\n");
-            loggerPanel.append("Sorting NanoSecs: " + sortingNanos + "\n");
-            loggerPanel.append("Hashing NanoSecs: " + hashingNanos + "\n");
-            loggerPanel.append("----------CONCLUDING CPU BENCHMARKS-----------\n\n");
+            loggerPanel.append("Low-order nano secs: " + lowOrderNanos + "\n");
+            loggerPanel.append("High-order nano secs: " + highOrderNanos + "\n");
+            loggerPanel.append("Compression nano secs: " + compressionNanos + "\n");
+            loggerPanel.append("Sorting nano secs: " + sortingNanos + "\n");
+            loggerPanel.append("Hashing nano secs: " + hashingNanos + "\n");
+            loggerPanel.append("----------CONCLUDING CPU BENCHMARKS-----------\n");
 
             // Compute the CPU Benchmark score
             // The CPU Benchmark score is simply the sum of the elapsed nano second
             // execution times for each test converted to millis, rounded to the nearest millis
             long CpuNanos = lowOrderNanos + highOrderNanos + compressionNanos
-                            + sortingNanos + hashingNanos;
+                    + sortingNanos + hashingNanos;
             cpuScore = ((CpuNanos / 1000/*microS*/) / 1000/*milliS*/);
             bmark1Score.setText(Long.toString(cpuScore));
 
             // Update the Total Score
-            totScore = cpuScore + memScore + batScore;
-            totalScore.setText(Long.toString(totScore));
+            //totScore = cpuScore + memScore + batScore;
+            //totalScore.setText("Total Score: " + Long.toString(totScore));
+
+            cpuDialog.dismiss();
 
             // Return UI control to the user
             EnableAllButtons();
@@ -181,17 +186,18 @@ public class MainActivity extends AppCompatActivity
         long primRandWriteNanos = 0;
         long primZeroingNanos = 0;
 
-        long secSeqReadNanos = 0;
-        long secSeqWriteNanos = 0;
-        long secRandReadNanos = 0;
-        long secRandWriteNanos = 0;
-        long secZeroingNanos = 0;
-
         @Override
         protected void onPreExecute()
         {
-            loggerPanel.append("------------RUNNING MEM BENCHMARKS------------\n");
+            loggerPanel.append("\n------------RUNNING MEMORY BENCHMARKS------------\n");
             DisableAllButtons();
+
+            memDialog = new AlertDialog.Builder(MainActivity.this).create();
+            memDialog.setTitle("Running battery benchmark...");
+            memDialog.setMessage("This pop-up will disappear when the benchmark finishes.");
+            memDialog.setCancelable(false);
+            memDialog.setCanceledOnTouchOutside(false);
+            memDialog.show();
         }
 
         @Override
@@ -209,14 +215,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void result)
         {
+            memDialog.dismiss();
+
             // Log results
-            loggerPanel.append("DONE with MEM Benchmark!\n");
-            loggerPanel.append("Primary seq read NanoSecs: " + primSeqReadNanos + "\n");
-            loggerPanel.append("Primary seq write NanoSecs: " + primSeqWriteNanos + "\n");
-            loggerPanel.append("Primary rand read NanoSecs: " + primRandReadNanos + "\n");
-            loggerPanel.append("Primary rand write NanoSecs: " + primRandWriteNanos + "\n");
-            loggerPanel.append("Primary zeroing NanoSecs: " + primZeroingNanos + "\n");
-            loggerPanel.append("----------CONCLUDING MEM BENCHMARKS-----------\n\n");
+            loggerPanel.append("Primary seq read nano secs: " + primSeqReadNanos + "\n");
+            loggerPanel.append("Primary seq write nano secs: " + primSeqWriteNanos + "\n");
+            loggerPanel.append("Primary rand read nano secs: " + primRandReadNanos + "\n");
+            loggerPanel.append("Primary rand write nano secs: " + primRandWriteNanos + "\n");
+            loggerPanel.append("Primary zeroing nano secs: " + primZeroingNanos + "\n");
+            loggerPanel.append("----------CONCLUDING MEMORY BENCHMARKS-----------\n");
 
             // Compute the Memory Benchmark score
             long primNanos = primSeqReadNanos + primSeqWriteNanos + primRandReadNanos + primRandWriteNanos + primZeroingNanos;
@@ -224,8 +231,95 @@ public class MainActivity extends AppCompatActivity
             bmark2Score.setText(Long.toString(memScore));
 
             // Update the Total Score
-            totScore = cpuScore + memScore + batScore;
-            totalScore.setText(Long.toString(totScore));
+            //totScore = cpuScore + memScore + batScore;
+            //totalScore.setText("Total Score: " + Long.toString(totScore));
+
+            // Return UI control to the user
+            EnableAllButtons();
+        }
+    }
+
+    // sub-class so that all vars within the MainActivity class (including controls)
+    // can be accessed within the class
+    private class RunBatBenchmark extends AsyncTask<Void, Void, Void>
+    {
+        long elapsedNanos = 0;
+
+        @Override
+        protected void onPreExecute()
+        {
+            DisableAllButtons();
+
+            batDialog = new AlertDialog.Builder(MainActivity.this).create();
+            batDialog.setTitle("Running BATTERY benchmark...");
+            batDialog.setMessage("This pop-up will disappear when the benchmark finishes.");
+            batDialog.setCancelable(false);
+            batDialog.setCanceledOnTouchOutside(false);
+            batDialog.show();
+
+            loggerPanel.append("\n------------RUNNING BATTERY BENCHMARK------------\n");
+            preTestBatPct = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+            loggerPanel.append("Pre-test battery percentage: " + preTestBatPct + "%\n");
+        }
+
+        @Override
+        protected Void doInBackground(Void... values)
+        {
+            // Summary: the function measures how long it takes for the battery%
+            // to drop by 1 percent while performing the tasks located in the
+            // CpuBatteryKill() function
+
+            // Create battery manager object to obtain battery%
+            BatteryManager bm = (BatteryManager)getSystemService(BATTERY_SERVICE);
+            // Get the battery% at the beginning of the test
+            int startBat = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+            // Declare variables needed within the loop
+            long startNanos = 0, stopNanos = 0;
+            int currBat = 0;
+            Boolean startTimeFlag = false;
+
+            // Loop until the battery% has dropped by 2%
+            do {
+                // Get the battery% at the beginning of each loop
+                currBat = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+                // Once the battery has dropped
+                if(currBat == startBat-1 && !startTimeFlag)
+                {
+                    startTimeFlag = true;
+                    startNanos = System.nanoTime();
+                }
+
+                // Call this function to perform a CPU intensive task
+                // on each iteration of the loop to drain the battery
+                // more quickly
+                CpuBenchmark.TestHashingPerf();
+            } while(currBat > startBat - 2);
+
+            // Stop the timer and calculate the elapsed time
+            stopNanos = System.nanoTime();
+            elapsedNanos = stopNanos - startNanos;
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result)
+        {
+            postTestBatPct = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+            loggerPanel.append("Post-test battery percentage: " + postTestBatPct + "%\n");
+            loggerPanel.append("------------CONCLUDING BATTERY BENCHMARK------------\n");
+            perfBatteryFlag = false;
+            batDialog.dismiss();
+
+            batScore = (((elapsedNanos) / 1000/*microS*/) / 1000/*milliS*/);
+            bmark3Score.setText(Long.toString(batScore));
+
+            // Update the Total Score
+            //totScore = cpuScore + memScore + batScore;
+            //totalScore.setText("Total Score: " + Long.toString(totScore));
+
 
             // Return UI control to the user
             EnableAllButtons();
@@ -241,13 +335,13 @@ public class MainActivity extends AppCompatActivity
     {
         bmark1RunBtn.setEnabled(false);
         bmark2RunBtn.setEnabled(false);
-        fullTestBtn.setEnabled(false);
+        bmark3RunBtn.setEnabled(false);
     }
 
     public void EnableAllButtons()
     {
         bmark1RunBtn.setEnabled(true);
         bmark2RunBtn.setEnabled(true);
-        fullTestBtn.setEnabled(false);
+        bmark3RunBtn.setEnabled(true);
     }
 }

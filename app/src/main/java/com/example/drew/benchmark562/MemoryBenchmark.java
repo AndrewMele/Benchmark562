@@ -179,7 +179,6 @@ public class MemoryBenchmark
         elapsedNanos = stopTime - startTime;
 
         return elapsedNanos;
-
     }
 
     //----------------------------------------------------------------------------------------------

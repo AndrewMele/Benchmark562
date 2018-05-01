@@ -101,10 +101,9 @@ public class CpuBenchmark
 
     static public long TestCompressionPerf()
     {
-        /*
         // https://developer.android.com/reference/java/util/zip/Deflater
 
-        int numOps = 1000;
+        int numOps = 10;
         int randStrLen = 10000;
         long stopTime;
         long startTime;
@@ -116,8 +115,8 @@ public class CpuBenchmark
         int decompressedBytesLen;
         byte[] decompressedBytes;
         String result;
-        Deflater compressor = new Deflater();
-        Inflater decompressor = new Inflater();
+        Deflater compressor;
+        Inflater decompressor;
 
         for (int i = 0; i < numOps; i++)
         {
@@ -125,13 +124,16 @@ public class CpuBenchmark
             try
             {
                 str2Compress = GenRandString(randStrLen);
+                System.out.println("here1");
                 bytes2Compress = str2Compress.getBytes("UTF-8"); // Encode a String into bytes
+                System.out.println("here2");
             } catch (java.io.UnsupportedEncodingException ex)
             {
                 return -1;
             }
 
             // Compress the bytes
+            compressor = new Deflater();
             compressedBytes = new byte[randStrLen];
             startTime = System.nanoTime(); // start compression
             compressor.setInput(bytes2Compress);
@@ -142,14 +144,20 @@ public class CpuBenchmark
             elapsedNanos += stopTime - startTime;
 
             // Decompress the bytes
+            decompressor = new Inflater();
             decompressor.setInput(compressedBytes, 0, compressedDataLength);
             decompressedBytes = new byte[randStrLen];
+
+            startTime = System.nanoTime();
+
             try
             {
                 decompressedBytesLen = decompressor.inflate(decompressedBytes);
                 decompressor.end();
-            } catch (java.util.zip.DataFormatException ex)
+            }
+            catch (java.util.zip.DataFormatException ex)
             {
+                System.out.println("java.util.zip.DataFormatException occurred...");
                 return -1;
             }
 
@@ -163,14 +171,15 @@ public class CpuBenchmark
             }
             stopTime = System.nanoTime(); // end decompression
             elapsedNanos += stopTime - startTime;
-        }*/
+        }
 
-        return 0;
+        return elapsedNanos;
+        //return 0;
     }
 
     static public long TestSortingPerf()
     {
-        /*int numEleToSort = 10000;
+        int numEleToSort = 10000;
         int intArr[] = new int[numEleToSort];
         Random rng = new Random(1); // seed of 1
         int maxRand = 1000000;
@@ -195,8 +204,7 @@ public class CpuBenchmark
         stopTime = System.nanoTime();
         elapsedNanos += stopTime - startTime;
 
-        return elapsedNanos;*/
-        return 0;
+        return elapsedNanos;
     }
 
     static public long TestHashingPerf()

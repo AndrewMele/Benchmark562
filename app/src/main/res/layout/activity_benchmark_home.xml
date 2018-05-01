@@ -6,35 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.drew.benchmark562.MainActivity">
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="384dp"
-        android:layout_height="80dp"
-        android:text="Welcome!"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/instructionsText"
-        android:layout_width="340dp"
-        android:layout_height="80dp"
-        android:text="Select one of the bencharks below to get started, or simply click Full Test."
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
-
     <!-- Benchmark 1 Controls -->
     <!-- Benchmark 1 Controls -->
     <!-- Benchmark 1 Controls -->
@@ -52,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.03" />
 
     <TextView
         android:id="@+id/bmark1ScoreLabel"
@@ -66,11 +37,11 @@
         app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.221" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/bmark1Score"
-        android:layout_width="52dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
         android:text="97"
         android:textAlignment="center"
@@ -80,10 +51,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintHorizontal_bias="0.980"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.113" />
 
     <TextView
         android:id="@+id/bmark1Desc"
@@ -95,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.235" />
+        app:layout_constraintVertical_bias="0.085" />
 
     <Button
         android:id="@+id/bmark1RunBtn"
@@ -111,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.703"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.235" />
+        app:layout_constraintVertical_bias="0.085" />
 
     <!-- Benchmark 2 Controls -->
     <!-- Benchmark 2 Controls -->
@@ -130,7 +101,7 @@
         app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.370" />
+        app:layout_constraintVertical_bias="0.220" />
 
     <TextView
         android:id="@+id/bmark2ScoreLabel"
@@ -144,11 +115,11 @@
         app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.409" />
+        app:layout_constraintVertical_bias="0.259" />
 
     <TextView
         android:id="@+id/bmark2Score"
-        android:layout_width="52dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
         android:text="78"
         android:textAlignment="center"
@@ -158,10 +129,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintHorizontal_bias="0.980"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintVertical_bias="0.306" />
 
     <TextView
         android:id="@+id/bmark2Desc"
@@ -173,7 +144,7 @@
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.435" />
+        app:layout_constraintVertical_bias="0.285" />
 
     <Button
         android:id="@+id/bmark2RunBtn"
@@ -189,7 +160,7 @@
         app:layout_constraintHorizontal_bias="0.703"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.435" />
+        app:layout_constraintVertical_bias="0.285" />
 
     <!-- Benchmark 3 Controls -->
     <!-- Benchmark 3 Controls -->
@@ -208,7 +179,7 @@
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintVertical_bias="0.413" />
 
     <TextView
         android:id="@+id/bmark3ScoreLabel"
@@ -222,11 +193,11 @@
         app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.45" />
 
     <TextView
         android:id="@+id/bmark3Score"
-        android:layout_width="52dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
         android:text="122"
         android:textAlignment="center"
@@ -236,10 +207,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintHorizontal_bias="0.980"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.649" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <TextView
         android:id="@+id/bmark3Desc"
@@ -251,76 +222,38 @@
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635" />
-
-    <!-- Total Score Controls -->
-    <!-- Total Score Controls -->
-    <!-- Total Score Controls -->
-    <!-- Total Score Controls -->
-
-    <TextView
-        android:id="@+id/totalScoreLabel"
-        android:layout_width="126dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Total Score"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86" />
-
-    <TextView
-        android:id="@+id/totalScore"
-        android:layout_width="86dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:text="297"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836" />
+        app:layout_constraintVertical_bias="0.485" />
 
     <Button
-        android:id="@+id/fullTestBtn"
-        android:layout_width="157dp"
+        android:id="@+id/bmark3RunBtn"
+        android:layout_width="69dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Full Test"
+        android:text="Run"
+        android:textAlignment="center"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.703"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.809" />
+        app:layout_constraintVertical_bias="0.485" />
+
+    <!-- Total Score Controls -->
+    <!-- Total Score Controls -->
+    <!-- Total Score Controls -->
+    <!-- Total Score Controls -->
 
     <!-- Logger Controls -->
 
     <TextView
         android:id="@+id/LoggerPanel"
-        android:layout_width="361dp"
-        android:layout_height="67dp"
+        android:layout_width="fill_parent"
+        android:layout_height="225dp"
         android:background="@android:color/black"
         android:ems="10"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:scrollbars="vertical"
         android:gravity="bottom"
         android:textColor="@android:color/background_light"
